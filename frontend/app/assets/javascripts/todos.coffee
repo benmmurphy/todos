@@ -81,9 +81,11 @@ $(() ->
       @model.clear()
 
   AppView = Backbone.View.extend
-    el: $("#todoapp")
+
 
     statsTemplate: JST['templates/stats_template']
+    mainTemplate: JST['templates/main']
+    tagName: 'div',
 
     events:
       "keypress #new-todo" : "createOnEnter"
@@ -92,6 +94,9 @@ $(() ->
       "click .mark-all-done" : "toggleAllComplete"
 
     initialize: () ->
+      @$el.html(@mainTemplate())
+      document.body.appendChild(@$el[0]) // i don't think this is very backbonish...
+
       _.bindAll(@, 'addOne', 'addAll', 'render', 'toggleAllComplete')
       @input = this.$("#new-todo")
       @allCheckbox = this.$(".mark-all-done")[0]
